@@ -51,7 +51,7 @@ public class SubsetSum {
 		return dp[n][b];
 
 	}
-
+//backtracking to find subs3et if such a subset is possible
 	private static List<Integer> findSubset(boolean[][] dp, int[] A, int b) {
 
 		int i = A.length;
