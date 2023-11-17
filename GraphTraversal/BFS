@@ -1,0 +1,33 @@
+package GraphAlgorithms;
+import java.util.*;
+
+public class BFS {
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	public static void bfs(List<List<Integer>> graph) {
+		
+		LinkedList<Integer> queue = new LinkedList<Integer>();
+		boolean[] vis = new boolean[graph.size()];
+		queue.add(0); //enqueue - add to the end of the list
+		vis[0] = true;
+		
+		while(queue.size()!= 0) {
+			
+			int currVertex = queue.poll();
+			System.out.println(currVertex);
+			
+			for(int child: graph.get(currVertex)) {
+				vis[child] = true;
+				queue.add(child);
+				
+			}
+			
+		}
+		
+		
+	}
+
+}
