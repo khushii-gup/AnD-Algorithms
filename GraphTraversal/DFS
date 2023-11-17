@@ -1,0 +1,76 @@
+package GraphAlgorithms;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class DFS {
+	
+	public static void main(String[] args) {
+		
+		List<List<Integer>> A2 = new ArrayList<List<Integer>>();
+		List<Integer> vis2 =  new ArrayList<Integer>();
+		int vertices = 3;
+		boolean[][] A = new boolean[vertices][vertices];
+		A[0][1] = true;
+		A[1][2] = true;
+		A[2][0] = true;
+		
+		boolean[] vis= new boolean[vertices];
+		dfs(A, vis, 0);
+		
+	
+	}
+	
+	public static void dfs(boolean[][] A, boolean[] vis, int currVertex) {
+		
+		vis[currVertex] = true;
+		System.out.println(currVertex);
+		
+		for(int i = 0; i<vis.length; i++) {
+			if(!vis[i] && A[currVertex][i]) {
+				dfs(A, vis, i);
+			}
+		}
+		
+	}
+	
+	public static void dfsAdjacenyList(List<List<Integer>> A, int currVertex, List<Integer> vis) {
+		
+		vis.add(currVertex);
+		System.out.println(currVertex);
+		
+		for(int child: A.get(currVertex)) {
+			if(!vis.contains(child)) {
+				dfsAdjacenyList(A, child, vis);
+			}
+		}
+		
+	}
+	
+	public static void dfsIterative(List<List<Integer>> A) {
+		
+		LinkedList<Integer> queue = new LinkedList<Integer>();
+		boolean[]  vis = new boolean[A.size()];
+		queue.push(0);
+		vis[0] = true;
+		
+		while(queue.size()!= 0) {
+			int currVertex = queue.poll();
+			System.out.println(currVertex);
+			
+			for(int child: A.get(currVertex)) {
+				if(!vis[child]) {
+					vis[child] = true;
+					queue.push(child);
+				}
+			}
+		}
+		
+		
+		
+	}
+	
+	
+
+}
