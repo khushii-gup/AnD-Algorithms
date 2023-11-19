@@ -1,0 +1,59 @@
+package ShortestPaths;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TopSortDAG {
+
+	public static void main(String[] args) {
+
+	}
+
+	public static void dfs(List<List<Integer>> graph, List<Integer> seq, List<Integer> vis, int currVertex) {
+
+		vis.add(currVertex);
+
+		if (graph.get(currVertex).size() == 0) {
+			seq.add(currVertex);
+			return;
+		}
+
+		for (int child : graph.get(currVertex)) {
+			if (!vis.contains(child)) {
+				dfs(graph, seq, vis, child);
+				seq.add(currVertex);
+			}
+		}
+
+	}
+
+	//assuming in this code that all edges have weight 1, as no appropriate graph weight data structure created
+	public static int[] shortestPath(List<List<Integer>> graph, int s) {
+		List<Integer> topSortSeq = new ArrayList<Integer>();
+		List<Integer> vis = new ArrayList<Integer>();
+		dfs(graph, topSortSeq, vis, s);
+		int[] dist = new int[graph.size()]; // initialize to -1
+		int[] degIn = new int[graph.size()]; //not calculated yet
+		
+		for(int vertex: topSortSeq) {
+			if(vertex == s) {
+				dist[vertex] = 0;
+			} else if(s != vertex && degIn[vertex] == 0) {
+				dist[vertex] = Integer.MAX_VALUE;
+			} else {
+				int min = Integer.MAX_VALUE;
+				for(int i = 0; i<graph.size(); i++) {
+					if(dist[i] != -1 && graph.get(i).contains(vertex) && dist[i] + 1 < min) {
+						min = dist[i] + 1;
+					}
+				}
+				dist[vertex] = min;
+			}
+			
+		}
+		
+
+		return null;
+	}
+
+}
