@@ -7,3 +7,10 @@ Dynamic Programming:
 3. MSS 
 4. JumpGame
 5. EditDIstance
+
+Search&Sort Algorithms:
+
+Graph Traversal Algorithms:
+
+Shortest Path Algorithms:
+
