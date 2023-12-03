@@ -1,0 +1,65 @@
+package SortingAlgorithms;
+
+public class SelectionSort {
+
+	
+	public static void main(String[] args) {
+		System.out.println("with sortMax:");
+		int[] A = {3,9,2,5};
+		sortMax(A);
+		
+		for(int i = 0; i<A.length; i++) {
+			System.out.print(A[i] + " ");
+		}
+		System.out.println("with sortMin:");
+		int[] B = {3,9,2,5};
+		sortMin(B);
+		
+		for(int i = 0; i<A.length; i++) {
+			System.out.print(B[i] + " ");
+		}
+
+		
+		
+	}
+	
+	private static void sortMin(int[] A) { // sorts by finding ith min element and putting in place
+		int n = A.length;
+		
+		for(int i = 0; i<n; i++) {
+			int minIndex = i;
+			for(int j = i; j<n; j++) {
+				if(A[j] < A[minIndex]) {
+					minIndex = j;
+				}
+			}
+			
+			//swap min and element at ith index
+			int temp = A[minIndex];
+			A[minIndex] = A[i];
+			A[i] = temp;
+			
+		}
+	}
+	
+	
+	private static void sortMax(int[] A) { //sorts by finding ith max element and putting in correct place 
+		int n = A.length;
+		
+		for(int i = 0; i<n; i++) {
+			int maxIndex = 0;
+			for(int j = 0; j<n-i; j++) {
+				if(A[j]>A[maxIndex]) {
+					maxIndex = j;
+				}
+			}
+			int temp = A[maxIndex];
+			A[maxIndex] = A[n-1-i];
+			A[n-1-i] = temp;
+		}
+		
+	
+		
+		
+	}
+}
