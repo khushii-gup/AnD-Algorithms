@@ -1,0 +1,67 @@
+package SortingAlgorithms;
+
+public class HeapSort {
+	
+	public static void main(String[] args) {
+		int[] A = {5,9,3,8,6};
+		sort(A);
+		printArray(A);
+	}
+	
+	public static void sort(int[] A) {
+		
+		//step 1: build a max heap by inserting elements one by one and calling heapify
+		for(int i = 1; i<A.length; i++) {
+			heapify(A, i);
+		}
+		//step 2: swap root element with last leaf, then "remove" last leaf and consider it sorted and then build max heap again
+		int lastleaf = A.length-1;
+		for(int i = 0; i<A.length; i++) {
+			swap(A, 0,lastleaf);
+			lastleaf--;
+			heapify(A, lastleaf);
+		}
+		
+	}
+	
+	public static void heapify(int[] A, int leaf) {
+		if(A[0] >= A[1] && A[0] >= A[2]) {
+			return;
+		}
+		int curr = 0;
+		while(A[curr] < A[2*curr] || A[curr] < A[(2*curr) +1]) {
+			if(A[curr] < A[2*curr]) {
+				swap(A, curr, 2*curr);
+				curr = 2*curr;
+			} else if (A[curr] < A[(curr*2)+1]){
+				swap(A, curr, (curr*2)+1);
+				curr = (curr*2)+1;
+			}
+			
+			if(curr*2 > leaf || (curr*2)+1 > leaf) {
+				break;
+			}
+			
+		}
+		
+	}
+	
+	public static void swap(int[] A, int root, int lastleaf) {
+		int temp = A[root];
+		A[root] = lastleaf;
+		A[lastleaf] = temp;
+	}
+	
+	
+	
+	public static void topToBottom(int[] A) {
+		
+	}
+	
+	public static void printArray(int[] A) {
+		for(int i = 0; i<A.length; i++) {
+			System.out.print(A[i] + " ");
+		}
+	}
+
+}
