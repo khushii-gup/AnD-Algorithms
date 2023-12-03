@@ -1,0 +1,137 @@
+package SortingAlgorithms;
+
+public class QuickSort {
+
+	
+	public static void main(String[] args) {
+		int[] A = {6,5,4,2,1,9,-3,3};
+		//sort(A);
+		betterVersionSort(A, 0, A.length-1);
+		printArray(A);
+		
+	}
+	
+	private static void betterVersionSort(int[] A, int low, int high) {
+		
+		if(low < high) {
+			int pivotIndex = findPivot(A, low, high);
+			betterVersionSort(A, low, pivotIndex-1);
+			betterVersionSort(A,pivotIndex+1, high);
+		}
+	}
+	
+	private static int findPivot(int[] A, int low, int high) { //puts pivot into correct position in array and returns index of pivot
+		
+		int pivot = A[low];
+		int pivotIndex = low;
+		
+		for(int i = low+1; i<=high; i++) {
+			if(A[i] <= pivot) {
+				pivotIndex++;
+				int temp = A[pivotIndex];
+				A[pivotIndex] = A[i];
+				A[i] = temp;
+			}
+		}
+		int temp = A[low];
+		A[low] = A[pivotIndex];
+		A[pivotIndex] = temp;
+		
+		return pivotIndex;
+	}
+	
+	
+	// TRY 1, Correct sorting, however not in place as uses extra arrays
+	public static void sort(int[] A) {
+		
+		if(A.length == 1 || A.length == 0) {
+			return;
+		}
+		
+		int pivotIndex = sortPivot(A);
+		int pivotElement = A[pivotIndex];
+		int[] left = new int[pivotIndex];
+		int[] right = new int[A.length - pivotIndex -1];
+		
+		fillArrays(left,right,pivotIndex,A);
+		
+		sort(left);
+		sort(right);
+		
+		
+		for(int i = 0; i<left.length; i++) {
+			A[i] = left[i];
+		}
+		
+		A[pivotIndex] = pivotElement;
+		int indexA = pivotIndex + 1;
+		for(int i = 0; i<right.length; i++) {
+			A[indexA] = right[i];
+			indexA++;
+		}
+		
+		
+		
+	}
+	
+	private static void fillArrays(int[] left, int right[], int pivotindex, int[] A) {
+		for(int i = 0; i<left.length; i++) {
+			left[i] = A[i];
+		}
+		
+		int indexA = pivotindex + 1;
+		for(int i = 0; i<right.length; i++) {
+			right[i] = A[indexA];
+			indexA++;
+		}
+		
+	}
+	
+	private static int sortPivot(int[] A) {
+		
+		int pivot = A[0];
+		int numSmaller = 0;
+		for(int i = 0; i<A.length; i++) {
+			if(A[i] < pivot) {
+				numSmaller++;
+			}
+		}
+		
+		int[] res = new int[A.length];
+		res[numSmaller] = pivot;
+		int greaterIndex = numSmaller + 1;
+		int smallerIndex = 0;
+		int count = 0;
+		for(int i = 0; i<A.length; i++) {
+			if(A[i] < pivot) {
+				res[smallerIndex] = A[i];
+				smallerIndex++;
+			} else if(A[i] > pivot){
+				//System.out.println(A[i] + " " + greaterIndex);
+				res[greaterIndex] = A[i];
+				greaterIndex++;
+			} else {
+				count++;
+				if(count > 1) {
+					res[greaterIndex] = A[i];
+					greaterIndex++;
+				}
+			}
+		}
+		
+		for(int i = 0; i<A.length; i++) {
+			A[i] = res[i];
+		}
+		return numSmaller;
+	}
+	
+	
+	
+	
+	public static void printArray(int[] A) {
+		for(int i = 0; i<A.length; i++) {
+			System.out.print(A[i] + " ");
+		}
+		System.out.println();
+	}
+}
