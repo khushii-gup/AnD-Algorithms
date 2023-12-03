@@ -1,0 +1,86 @@
+package SortingAlgorithms;
+
+public class MergeSort {
+
+	public static void main(String[] args) {
+		int[] A = { 6, 2, 9, 5,1 };
+		int[] res = divide(A);
+		for (int i = 0; i < res.length; i++) {
+			System.out.print(res[i] + " ");
+		}
+
+	}
+
+	private static int[] divide(int[] A) {
+		if(A.length == 1) {
+			return A;
+		}
+		
+		int mid = A.length/2;
+		int l[] = new int[mid];
+		int r[] = new int[A.length-mid];
+		fillArrays(A,l, r);
+		
+		int[] left = divide(l);
+		int[] right = divide(r);
+		
+		int[] res = merge(left, right);
+		return res;
+		
+		
+	}
+	
+	private static int[] merge(int[] left, int[] right) {
+		
+		int leftIndex = 0;
+		int rightIndex = 0;
+		int[] res = new int[left.length + right.length];
+		int resIndex = 0;
+		
+		
+		while(leftIndex< left.length && rightIndex<right.length) {
+			if(left[leftIndex] < right[rightIndex]) {
+				res[resIndex] = left[leftIndex];
+				leftIndex++;
+				resIndex++;
+			} else {
+				res[resIndex] = right[rightIndex];
+				rightIndex++;
+				resIndex++;
+			}	
+		}
+		
+		
+		if(leftIndex<left.length) {
+			for(int i = leftIndex; i<left.length; i++) {
+				res[resIndex] = left[i];
+				resIndex++;
+			}
+		}
+		
+		if(rightIndex < right.length) {
+			for(int i = rightIndex; i<right.length; i++) {
+				res[resIndex] = right[i];
+				resIndex++;
+			}
+		}
+		return res;
+		
+		
+	}
+	
+	private static void fillArrays(int[] A, int[] left, int[] right) {
+		
+		for(int i = 0; i<left.length; i++) {
+			left[i] = A[i];
+		}
+		
+		int j = 0;
+		for(int i = left.length; i<(left.length+right.length); i++) {
+			right[j] = A[i];
+			j++;
+		}
+		
+	}
+
+}
