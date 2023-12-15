@@ -1,6 +1,7 @@
 package GraphAlgorithms;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TopSort {
@@ -29,7 +30,46 @@ public class TopSort {
 	
 	public static List<Integer> KhansAlg(int[][] A){
 		
-		return null;
+		int n = A.length;
+		int[] inDegree = new int[n];
+		LinkedList<Integer> queue = new LinkedList<Integer>();
+		findDegreeIn(inDegree, A, n, queue);
+		List<Integer> topOrder = new ArrayList<Integer>();
+		
+		while(!queue.isEmpty()) {
+			int currVertex = queue.poll();
+			topOrder.add(currVertex);
+			
+			for(int i = 0; i<n; i++) {
+				if(A[currVertex][i] == 1) {
+					inDegree[i] -= 1;
+					if(inDegree[i] == 0) {
+						queue.add(i);
+					}
+				}
+			}
+			
+		}
+			
+		if(topOrder.size() == 0) {
+			return null; // cycle present in Graph!
+		} else return topOrder;
+		
+	}
+	
+	public static void findDegreeIn(int[] inDegree, int[][] A, int n, LinkedList<Integer> queue) {
+		int count = 0;
+		for(int j = 0; j<n; j++) {
+			for(int i = 0; i<n; i++) {
+				if(A[i][j] != 0) count++;
+			}
+			inDegree[j] = count;
+			if(count == 0) {
+				queue.add(j);
+			}
+			count = 0;
+		}
+		
 	}
 	
 	public static void dfs(List<List<Integer>> graph, List<Integer> seq, List<Integer> vis, int currVertex){
