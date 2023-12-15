@@ -1,0 +1,44 @@
+package ShortestPaths;
+
+public class FloydWarshall {
+	
+	public class Edge{
+		int u;
+		int v;
+		int weight;
+		public Edge(int u, int v, int weight) {
+			this.u = u;
+			this.v= v;
+			this.weight = weight;
+		}
+	}
+	
+	public static int[][] findShortestPaths(Edge[] edges, int n){
+		
+		int[][] dist = new int[n][n];
+		for(int i = 0; i<n; i++) {
+			for(int j = 0; j<n; j++) {
+				dist[i][j] = Integer.MAX_VALUE;
+				if(i==j) dist[i][j] = 0;
+			}
+		}
+		
+		for(int i = 0; i<edges.length; i++) {
+			dist[edges[i].u][edges[i].v] = edges[i].weight;
+		}
+		
+		
+		for(int k = 0; k<n; k++) {
+			for(int i = 0; i<n; i++) {
+				for(int j = 0; j<n; j++) {
+					if(dist[i][j] > dist[i][k] + dist[k][j]) {
+						dist[i][j] = dist[i][k] + dist[k][j];
+					}
+				}
+			}
+		}
+		return dist;
+		
+	}
+
+}
