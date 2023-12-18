@@ -14,26 +14,27 @@ public class UnionFind {
 	}
 	
 	public boolean connected(int a, int b) {
-		if(find(a) == find(b)) return true;
+		if(findVer2(a) == findVer2(b)) return true;
 		else return false;
 	}
 	
 	public void union(int a, int b) {
+		int rootA = findVer2(a);
+		int rootB = findVer2(b);
+		if(rootA == rootB) return; //they are already in the same set
 		
-		if(find(a) == find(b)) return; //they are already in the same set
-		
-		if(rank[a] == rank[b]) {
-			parent[b] = a;
-			rank[a] = rank[a] + 1; 
-		} else if(rank[a] < rank[b]){
-			parent[a] = b;
-		} else {
-			parent[b] = a;
-		}
+    		if(rank[rootA] == rank[rootB]) {
+	      	parent[rootB] = rootA;
+	      	rank[rootA] = rank[rootA] + 1; 
+	    	} else if(rank[rootA] < rank[rootB]){
+	      	parent[rootA] = rootB;
+	    	} else {
+	      	parent[rootB] = rootA;
+	    	}
 		
 	}
 	
-	public int find(int a) {
+	public int findVer1(int a) {
 		int currNode = a;
 		while(parent[currNode] != currNode) {
 			//changes pointer to grandparent instead of parent -- goes through only half of the nodes in the tree
@@ -43,5 +44,12 @@ public class UnionFind {
 		}
 		return parent[currNode];
 	}
+
+	public int findVer2(int x){
+	    if(parent[x] != x){
+     	     parent[x] = findVer2(parent[x]);
+   	    }
+          return parent[x];
+   }
 
 }
