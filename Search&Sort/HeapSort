@@ -45,23 +45,30 @@ public class HeapSort {
 		}
 		
 	}
-	
-	public static void swap(int[] A, int root, int lastleaf) {
-		int temp = A[root];
-		A[root] = lastleaf;
-		A[lastleaf] = temp;
-	}
-	
-	
-	
-	public static void topToBottom(int[] A) {
-		
-	}
-	
-	public static void printArray(int[] A) {
-		for(int i = 0; i<A.length; i++) {
-			System.out.print(A[i] + " ");
-		}
-	}
+}	
 
-}
+procedure heapsort(a, count) is
+    input: an unordered array a of length count
+    
+    start ← floor(count/2)
+    end ← count
+    while end > 1 do
+        if start > 0 then    (Heap construction)
+            start ← start − 1
+        else                 (Heap extraction)
+            end ← end − 1
+            swap(a[end], a[0])
+   
+        (The following is siftDown(a, start, end))
+        root ← start
+        while iLeftChild(root) < end do
+            child ← iLeftChild(root)
+            (If there is a right child and that child is greater)
+            if child+1 < end and a[child] < a[child+1] then
+                child ← child + 1
+    
+            if a[root] < a[child] then
+                swap(a[root], a[child])
+                root ← child         (repeat to continue sifting down the child now)
+            else
+                break                (return to outer loop)
