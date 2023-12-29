@@ -87,7 +87,7 @@ public class TopSort {
 	
 	public static void dfs(List<List<Integer>> graph, int currVertex, boolean[] vis, List<Integer> topSort){
 		
-		vis[currVertx] = true;
+		vis[currVertex] = true;
 		
 		for(int child: graph.get(currVertex)) {
 			if(!vis[child])) {
