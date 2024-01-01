@@ -1,0 +1,43 @@
+//method to find the vertices on the shortest paths of an unweighted graph from s to t
+
+public static Set<Integer> bfs(List<List<Integer>> graph, int s, int t){
+		
+		int n = graph.size();
+		ArrayList<ArrayList<Integer>> prev = new ArrayList<ArrayList<Integer>>();
+		for(int i = 0; i<n; i++) {
+			prev.add(new ArrayList<Integer>());
+		}
+		Set<Integer> onSP = new HashSet<Integer>();
+		int[] dist = new int[n];
+		boolean[] vis = new boolean[n];
+		LinkedList<Integer> queue = new LinkedList<Integer>();
+		dist[s] = 0;
+		queue.add(s);
+		vis[s] = true;
+		
+		while(!queue.isEmpty()) {
+			int currVertex = queue.poll();
+			
+			for(int child: graph.get(currVertex)) {
+				if(!vis[child]) {
+					vis[child] = true;
+					queue.add(child);
+					dist[child] = dist[currVertex] + 1;
+					prev.get(child).add(currVertex);
+				} else if(dist[child] > dist[currVertex] + 1) {
+					dist[child] = dist[currVertex] + 1;
+					prev.get(child).clear();
+					prev.get(child).add(currVertex);
+				} else if(dist[child] == dist[currVertex] + 1) {
+					prev.get(child).add(currVertex);
+				}
+			}
+		}
+		
+		for(ArrayList<Integer> list: prev) {
+			onSP.addAll(list);
+		}
+		
+		onSP.add(t);
+		return onSP;
+	}
