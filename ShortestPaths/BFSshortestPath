@@ -47,7 +47,8 @@ public class BFSshortestPath {
 					vis[child] = true;
 					dist[child] = dist[currVertex] + 1;
 
-				} else if (dist[child] > dist[currVertex] + 1) {
+				} //Next part not needed, as a shorter path contains less edges in an unweighted graph, and will be found before 
+				else if (dist[child] > dist[currVertex] + 1) {
 					dist[child] = dist[currVertex] + 1;
 				}
 			}
